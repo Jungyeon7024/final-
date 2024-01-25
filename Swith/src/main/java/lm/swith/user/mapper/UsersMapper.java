@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.UpdateProvider;
 
 import lm.swith.user.model.SwithUser;
 
@@ -19,10 +20,8 @@ public interface UsersMapper {
 
     SwithUser findByEmailAndPassword(String email, String password);
     
-    // SwithUserMapper를 가져오는 메서드 추가
-    SwithUserMapper getSwithUserMapper();
+  
     
-    interface SwithUserMapper {
-        void updateUserIntroduction(SwithUser user);
-    }
+    @UpdateProvider(type = UsersSqlProvider.class, method = "updateIntroduction")
+    void updateIntroduction(@Param("newIntroduction") String newIntroduction);
 }

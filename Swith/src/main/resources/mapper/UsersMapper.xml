@@ -27,9 +27,9 @@
 	</select>
 	 
 	 <!-- 원정연 파트 -->
-	<update id="updateUserIntroduction" parameterType="lm.swith.user.model.SwithUser">
-        UPDATE your_user_table
-        SET user_introduction = #{user_introduction}
-        WHERE user_no = #{user_no}
+	<update id="updateIntroduction">
+        UPDATE your_table
+        SET user_introduction = #{newIntroduction}
+        WHERE your_conditions;
     </update>
 </mapper>

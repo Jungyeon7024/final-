@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -159,13 +160,12 @@ public class RegisterController {
 	//원정연 파트 (update)
 	
 
-	@PostMapping("/updateIntroduction")
-	public SwithUser updateIntroduction(@RequestBody SwithUser.UpdateIntroductionRequest request) {
-	    String newIntroduction = request.getIntroduction();
-	    userData.setUserIntroduction(newIntroduction);
-
-	    return userData;
+	@PutMapping("/updateIntroduction")
+	public void updateIntroduction(@RequestBody SwithUser.UpdateIntroductionRequest request) {
+	    SwithUser userToUpdate = SwithUser.builder().user_introduction(request.getUser_introduction()).build();
+	    usersMapper.getSwithUserMapper().updateIntroduction(userToUpdate);
 	}
+
 
 	
 	@GetMapping("/kakao/callback")
