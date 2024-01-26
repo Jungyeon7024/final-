@@ -76,9 +76,12 @@ public class UserService {
         return usersMapper.findByEmail(email);
     }
 	//원정연 파트 (update)
-	public void updateUserIntroduction(SwithUser user) {
-        usersMapper.getSwithUserMapper().updateUserIntroduction(user);
+
+      
+    public void updateUser(SwithUser swithUser) {
+        	usersMapper.updateUser(swithUser);
     }
+  
 	
 
 }

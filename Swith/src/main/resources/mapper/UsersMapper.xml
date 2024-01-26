@@ -1,7 +1,10 @@
 <!-- MembersMapper (myBatis) -->
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="lm.swith.user.mapper.UsersMapper">
+	<mapper namespace="lm.swith.user.mapper.UsersMapper">
+    
+
+
 	<!-- 회원등록 -->
 	<insert id ="insertUser" parameterType="lm.swith.user.model.SwithUser">
 		INSERT INTO USERS (EMAIL, PASSWORD, USERNAME, NICKNAME, USER_PROFILE, USERADDRESS, USER_INTRODUCTION, USER_ROLE)
@@ -12,7 +15,7 @@
 	<select id="findByEmail" parameterType="lm.swith.user.model.SwithUser">
         SELECT * FROM Users WHERE EMAIL = #{email}
     </select>
-    
+   
 	
 	
 	<select id ="findByEmailAndPassword" parameterType="lm.swith.user.model.SwithUser">
@@ -27,9 +30,16 @@
 	</select>
 	 
 	 <!-- 원정연 파트 -->
-	<update id="updateIntroduction">
-        UPDATE your_table
-        SET user_introduction = #{newIntroduction}
-        WHERE your_conditions;
-    </update>
+	 <update id="updateUser" parameterType="lm.swith.user.model.SwithUser">
+   UPDATE users
+   SET user_introduction = #{user_introduction},
+       password = #{password}
+   WHERE email = #{email}
+</update>
+    
+    
+    
+    
+    
+	
 </mapper>

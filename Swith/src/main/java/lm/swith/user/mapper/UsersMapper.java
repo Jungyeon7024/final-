@@ -20,8 +20,9 @@ public interface UsersMapper {
 
     SwithUser findByEmailAndPassword(String email, String password);
     
-  
+    SwithUser getUserByEmail(String email);
     
-    @UpdateProvider(type = UsersSqlProvider.class, method = "updateIntroduction")
-    void updateIntroduction(@Param("newIntroduction") String newIntroduction);
+
+    SwithUser updateUser(SwithUser swithUser);
+   
 }

@@ -6,6 +6,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
+import java.util.Map;
 
 import javax.imageio.ImageIO;
 
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +36,7 @@ import lm.swith.user.common.MsgEntity;
 import lm.swith.user.model.ResponseDTO;
 import lm.swith.user.model.SwithDTO;
 import lm.swith.user.model.SwithUser;
-import lm.swith.user.model.SwithUser.UpdateIntroductionRequest;
+
 import lm.swith.user.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 
@@ -158,15 +160,31 @@ public class RegisterController {
 		return ResponseEntity.ok(createUser);
 	}
 	//원정연 파트 (update)
-	
+	@GetMapping("/mypage/{email}")
+	public ResponseEntity<String> getUserByEmail(@PathVariable String email) {
+	    SwithUser swithUser = userService.getUserByEmail(email);
 
-	@PutMapping("/updateIntroduction")
-	public void updateIntroduction(@RequestBody SwithUser.UpdateIntroductionRequest request) {
-	    SwithUser userToUpdate = SwithUser.builder().user_introduction(request.getUser_introduction()).build();
-	    usersMapper.getSwithUserMapper().updateIntroduction(userToUpdate);
+	    if (swithUser != null) {
+	        return ResponseEntity.ok(swithUser.getEmail());
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
 	}
 
+	@PutMapping("/mypage/modify/{email}")
+	public ResponseEntity<SwithUser> updateUser(@PathVariable String email, @RequestBody SwithUser updatedUser) {
+	
+	    SwithUser swithUser = userService.getUserByEmail(email);
 
+	    if (swithUser != null) {
+	        swithUser.setUser_introduction(updatedUser.getUser_introduction());
+	        swithUser.setPassword(updatedUser.getPassword());
+	        userService.updateUser(swithUser);
+	        return ResponseEntity.ok(swithUser);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
 	
 	@GetMapping("/kakao/callback")
     public String callback(HttpServletRequest request,

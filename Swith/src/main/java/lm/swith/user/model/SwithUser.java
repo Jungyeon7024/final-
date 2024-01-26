@@ -29,17 +29,7 @@ public class SwithUser {
 	private String user_introduction;//introduction
 	private String role;// authorization(user / admin) kakao,github
 	
-	 @Builder
-	    @Getter
-	    @Setter
-	    public static class UpdateIntroductionRequest {
-	        private String user_introduction;
-
-	        public static UpdateIntroductionRequestBuilder builder(String user_introduction) {
-	            return new UpdateIntroductionRequestBuilder().user_introduction(user_introduction);
-	        }
-	    }
-	
+	 
 	public SwithUser() {};
 	
 	
