@@ -24,5 +24,10 @@ public interface UsersMapper {
     
 
     SwithUser updateUser(SwithUser swithUser);
+
+	static void save(SwithUser user) {
+		
+	
+	}
    
 }

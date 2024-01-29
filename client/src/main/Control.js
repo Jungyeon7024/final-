@@ -7,6 +7,9 @@ import Login from './Login';
 import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
 import ModifyPage from './ModifyPage';
+import GithubRegister from './githubRegister';
+
+
 
 // function AuthenticatedRoute({ children }) {
 //   const authContext = useAuth();
@@ -28,6 +31,7 @@ export default function Control() {
           <Route path="/register" element={<RegisterUser />} />
           <Route path="/detail" element={<StudyDetail />} />
           <Route path="/mypage/modify" element={<ModifyPage />} />
+          <Route path="/githubregister" element={<GithubRegister />} />
         </Routes>
       </BrowserRouter>
     </div>

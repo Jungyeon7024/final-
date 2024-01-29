@@ -9,6 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.filter.CorsFilter;
 
 import lm.swith.user.token.JwtAuthenticationFilter;
@@ -55,4 +56,8 @@ import lombok.extern.slf4j.Slf4j;
 		static PasswordEncoder passwordEncoder() {
 			return new BCryptPasswordEncoder(); // 기본형식인 Security는 기본적으로 DelegatingPasswordEncoder를 BCryptPasswordEncoder() 형식으로 저장
 		}
-}
+		
+		
+		
+		
+	}

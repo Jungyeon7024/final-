@@ -10,6 +10,7 @@ import java.util.Map;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lm.swith.user.Service.GithubUserService;
 import lm.swith.user.Service.KakaoService;
 import lm.swith.user.Service.MailService;
 import lm.swith.user.Service.UserService;
@@ -36,7 +38,7 @@ import lm.swith.user.common.MsgEntity;
 import lm.swith.user.model.ResponseDTO;
 import lm.swith.user.model.SwithDTO;
 import lm.swith.user.model.SwithUser;
-
+import lm.swith.user.model.SwithUser.SwithUserBuilder;
 import lm.swith.user.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 
@@ -46,12 +48,16 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin(origins="http://localhost:3000", allowCredentials = "true")
 public class RegisterController {
+	
 	private final KakaoService kakaoService;
 	private final UserService userService;
 	private final MailService mailService;
 	private final JavaMailSender javaMailSender;
 	private final TokenProvider tokenProvider;
 	private final PasswordEncoder passwordEncoder;
+	
+	@Autowired
+    private final GithubUserService githubService;
 	private SwithUser userData = new SwithUser(); // 가상의 사용자 데이터
 	// -------- 토큰 발급 --------
 	@PostMapping("/signin")
@@ -179,12 +185,21 @@ public class RegisterController {
 	    if (swithUser != null) {
 	        swithUser.setUser_introduction(updatedUser.getUser_introduction());
 	        swithUser.setPassword(updatedUser.getPassword());
+	    
 	        userService.updateUser(swithUser);
+
+	  
 	        return ResponseEntity.ok(swithUser);
 	    } else {
+	     
 	        return ResponseEntity.notFound().build();
 	    }
 	}
+	
+
+	 
+	 /**/
+	
 	
 	@GetMapping("/kakao/callback")
     public String callback(HttpServletRequest request,
@@ -233,4 +248,53 @@ public class RegisterController {
                 .body(responseMsg);
                 */
     }
+    @GetMapping("/github/callback")
+    public String callback(HttpServletRequest request,
+                           @RequestParam(required = false) String username,
+                           @RequestParam(required = false) String userAddress,
+                           @RequestParam(required = false) String userIntroduction)
+                           throws Exception {
+
+        SwithUser githubInfo = githubService.getGithubInfo(request.getParameter("code"), username);
+      
+        
+        
+        
+        return "githubregister";
+    }
+
+    @PostMapping("githubregister")
+    public ResponseEntity<MsgEntity> registerUser(@RequestParam String email,
+                                                 @RequestParam String nickname,
+                                                 @RequestParam String username) {
+        SwithUser swithUser = SwithUser.builder()
+                .email(email)
+                .nickname(nickname)
+                .username(username)
+                .build();
+
+        SwithUser registeredUser = userService.signUpUser(swithUser);
+
+        return ResponseEntity.ok()
+                .body(new MsgEntity("Success", registeredUser));
+    }
 }
+   
+
+   
+
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+

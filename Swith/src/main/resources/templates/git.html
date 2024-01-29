@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>깃허브로 진행하는 회원가입</title>
+	</head>
+	<body>
+		<h2>깃허브로 회원가입</h2>
+		<form action="/users/github/gitregister" method="post">
+			<label>이메일 : </label>
+			<input type="text" id="email" name="email" />
+			
+			<!--<input type="text" id="email" name="email" 
+												th:value="${githubInfo.email}" 
+												readonly> -->
+			
+			<br>
+			<label>닉네임 : </label>
+			<input type="text" id="nickname" name="nickname" 
+											th:value="${githubInfo.nickname}" 
+											readonly>
+			<br>
+			<label>이름 : </label>
+			<input type="text" id="name" name="name" />
+			<label>주소 : </label>
+			<input type="text" id="address" name="address">
+			<br>
+			<label>프로필 : </label>
+			<input type="text" id="profileimg" name="profileimg">
+			<br>
+			<label>자기소개 : </label>
+			<input type="text" id="introduction" name="introduction">
+			<br>
+			<input type="submit" value="가입완료">
+			
+			
+		</form>
+	</body>
+</html>
