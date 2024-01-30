@@ -11,6 +11,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -249,21 +250,27 @@ public class RegisterController {
                 */
     }
     @GetMapping("/github/callback")
-    public String callback(HttpServletRequest request,
-                           @RequestParam(required = false) String username,
-                           @RequestParam(required = false) String userAddress,
-                           @RequestParam(required = false) String userIntroduction)
-                           throws Exception {
-
-        SwithUser githubInfo = githubService.getGithubInfo(request.getParameter("code"), username);
-      
-        
-        
-        
-        return "githubregister";
+    public ResponseEntity<?> callback(HttpServletRequest request,
+                                       @RequestParam(required = false) String username,
+                                       @RequestParam(required = false) String userAddress,
+                                       @RequestParam(required = false) String userIntroduction
+                                       
+                                      ) throws Exception {
+    	 SwithUser githubInfo = githubService.getGithubInfo(request.getParameter("code"), username);
+         System.out.println("githubInfo : " + githubInfo.getNickname());
+    
+            return ResponseEntity.ok().body(githubInfo);
+       
     }
-
-    @PostMapping("githubregister")
+    
+    
+    
+//button -> /github/callback
+    // GetMapping endpoint add , "/address"
+    
+    
+    
+    @PostMapping("/githubregister")
     public ResponseEntity<MsgEntity> registerUser(@RequestParam String email,
                                                  @RequestParam String nickname,
                                                  @RequestParam String username) {
@@ -278,6 +285,7 @@ public class RegisterController {
         return ResponseEntity.ok()
                 .body(new MsgEntity("Success", registeredUser));
     }
+    
 }
    
 

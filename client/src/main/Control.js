@@ -7,7 +7,9 @@ import Login from './Login';
 import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
 import ModifyPage from './ModifyPage';
-import GithubRegister from './githubRegister';
+import GithubRegister from './GithubRegisters';
+
+
 
 
 
@@ -31,7 +33,7 @@ export default function Control() {
           <Route path="/register" element={<RegisterUser />} />
           <Route path="/detail" element={<StudyDetail />} />
           <Route path="/mypage/modify" element={<ModifyPage />} />
-          <Route path="/githubregister" element={<GithubRegister />} />
+          <Route path="/githubRegister" element={<GithubRegister />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -26,8 +26,7 @@ public class KakaoService {
 	
 		// Value를 썼기 때문에 각 값을 변수에 넣어 보관하겠다는 의미
 				@Value("${kakao.client.id}") // Spring으로 import
-				private String KAKAO_CLIENT_ID;
-				
+				private String KAKAO_CLIENT_ID;	
 				@Value("${kakao.client.secret}")
 				private String KAKAO_CLIENT_SECRET;	
 				@Value("${kakao.redirect.url}")
@@ -35,7 +34,6 @@ public class KakaoService {
 				
 				// 카카오 자체에서 인증으로 들어가는 공식 주소
 				private final static String KAKAO_AUTH_URI ="https://kauth.kakao.com";
-
 			    private final static String KAKAO_API_URI="https://kapi.kakao.com";
 				
 				private final UsersMapper usersmapper;

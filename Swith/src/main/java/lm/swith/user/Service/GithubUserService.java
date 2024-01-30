@@ -26,6 +26,8 @@ class AppConfig {
 @Service
 public class GithubUserService {
 
+	
+	
     private final UsersMapper usersMapper;
     private final RestTemplate restTemplate;
 
