@@ -6,7 +6,9 @@
 	</head>
 	<body>
 		<h2>깃허브로 회원가입</h2>
-		<form action="/users/github/gitregister" method="post">
+	
+	<form th:action="@{/users/github/register}" th:object="${users}" method="post">	
+
 			<label>이메일 : </label>
 			<input type="text" id="email" name="email" />
 			
@@ -21,7 +23,7 @@
 											readonly>
 			<br>
 			<label>이름 : </label>
-			<input type="text" id="name" name="name" />
+			<input type="text" id="username" name="username" />
 			<label>주소 : </label>
 			<input type="text" id="address" name="address">
 			<br>

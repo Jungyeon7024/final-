@@ -6,12 +6,10 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
-import java.util.Map;
 
 import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -28,7 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lm.swith.user.Service.GithubUserService;
@@ -39,11 +36,9 @@ import lm.swith.user.common.MsgEntity;
 import lm.swith.user.model.ResponseDTO;
 import lm.swith.user.model.SwithDTO;
 import lm.swith.user.model.SwithUser;
-import lm.swith.user.model.SwithUser.SwithUserBuilder;
 import lm.swith.user.token.TokenProvider;
 import lombok.RequiredArgsConstructor;
 
-@RestController
 @Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
@@ -104,7 +99,7 @@ public class RegisterController {
         user.setImg(imageUrl);//단순 출력용 blob을 string형태로 출력하기위함 
       
         return ResponseEntity.ok(user);
-    }
+      }
 	  @GetMapping("/")
 	  public String MailPage(){
 	      return "/";
@@ -166,40 +161,8 @@ public class RegisterController {
 		SwithUser createUser = userService.signUpUser(swithUser);
 		return ResponseEntity.ok(createUser);
 	}
-	//원정연 파트 (update)
-	@GetMapping("/mypage/{email}")
-	public ResponseEntity<String> getUserByEmail(@PathVariable String email) {
-	    SwithUser swithUser = userService.getUserByEmail(email);
-
-	    if (swithUser != null) {
-	        return ResponseEntity.ok(swithUser.getEmail());
-	    } else {
-	        return ResponseEntity.notFound().build();
-	    }
-	}
-
-	@PutMapping("/mypage/modify/{email}")
-	public ResponseEntity<SwithUser> updateUser(@PathVariable String email, @RequestBody SwithUser updatedUser) {
-	
-	    SwithUser swithUser = userService.getUserByEmail(email);
-
-	    if (swithUser != null) {
-	        swithUser.setUser_introduction(updatedUser.getUser_introduction());
-	        swithUser.setPassword(updatedUser.getPassword());
-	    
-	        userService.updateUser(swithUser);
-
-	  
-	        return ResponseEntity.ok(swithUser);
-	    } else {
-	     
-	        return ResponseEntity.notFound().build();
-	    }
-	}
 	
 
-	 
-	 /**/
 	
 	
 	@GetMapping("/kakao/callback")
@@ -249,42 +212,41 @@ public class RegisterController {
                 .body(responseMsg);
                 */
     }
-    @GetMapping("/github/callback")
-    public ResponseEntity<?> callback(HttpServletRequest request,
-                                       @RequestParam(required = false) String username,
-                                       @RequestParam(required = false) String userAddress,
-                                       @RequestParam(required = false) String userIntroduction
-                                       
-                                      ) throws Exception {
-    	 SwithUser githubInfo = githubService.getGithubInfo(request.getParameter("code"), username);
-         System.out.println("githubInfo : " + githubInfo.getNickname());
     
-            return ResponseEntity.ok().body(githubInfo);
-       
-    }
+  
+   
+      @GetMapping("/github/callback")
+ 
+		    public String callback(HttpServletRequest request,
+		                           @RequestParam(required = false) String username,
+		                           @RequestParam(required = false) String email, Model model) throws Exception {
+
+	        	SwithUser githubInfo = githubService.getGithubInfo(request.getParameter("code"), username);
+		        model.addAttribute("githubInfo", githubInfo);
+		        return "githubregister";
+		    }   
     
-    
-    
-//button -> /github/callback
-    // GetMapping endpoint add , "/address"
-    
-    
-    
-    @PostMapping("/githubregister")
+    @PostMapping("/github/register")
     public ResponseEntity<MsgEntity> registerUser(@RequestParam String email,
-                                                 @RequestParam String nickname,
-                                                 @RequestParam String username) {
-        SwithUser swithUser = SwithUser.builder()
-                .email(email)
+                                                  @RequestParam String nickname,
+                                                  @RequestParam String username
+                                                 ) {
+    	SwithUser swithUser = SwithUser.builder()
+    			.email(email)
                 .nickname(nickname)
                 .username(username)
                 .build();
-
-        SwithUser registeredUser = userService.signUpUser(swithUser);
-
+    	SwithUser registeredUser = githubService.registerUser(swithUser);
         return ResponseEntity.ok()
                 .body(new MsgEntity("Success", registeredUser));
     }
+    /*
+    @GetMapping("/github/login-url")
+    public ResponseEntity<String> getGithubLoginUrl() {
+        String githubLoginUrl = githubService.getGithubLogin();
+        return ResponseEntity.ok().body(githubLoginUrl);
+    }
+*/
     
 }
    

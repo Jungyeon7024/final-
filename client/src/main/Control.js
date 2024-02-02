@@ -7,7 +7,7 @@ import Login from './Login';
 import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
 import ModifyPage from './ModifyPage';
-import GithubRegister from './GithubRegisters';
+import GithubRegister from './GithubRegister';
 
 
 
