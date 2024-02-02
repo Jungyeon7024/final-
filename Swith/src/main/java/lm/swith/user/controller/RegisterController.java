@@ -240,13 +240,13 @@ public class RegisterController {
         return ResponseEntity.ok()
                 .body(new MsgEntity("Success", registeredUser));
     }
-    /*
+    
     @GetMapping("/github/login-url")
     public ResponseEntity<String> getGithubLoginUrl() {
         String githubLoginUrl = githubService.getGithubLogin();
         return ResponseEntity.ok().body(githubLoginUrl);
     }
-*/
+
     
 }
    
