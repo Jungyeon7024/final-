@@ -82,6 +82,8 @@ public class UserService {
         	usersMapper.updateUser(swithUser);
     }
   
-	
+    public SwithUser findUserId(SwithUser swithUser) {
+    	return usersMapper.findUserId(swithUser);
+    }
 
 }

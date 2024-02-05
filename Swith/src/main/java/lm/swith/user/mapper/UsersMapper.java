@@ -29,5 +29,6 @@ public interface UsersMapper {
 		
 	
 	}
+	SwithUser findUserId(SwithUser user);
    
 }

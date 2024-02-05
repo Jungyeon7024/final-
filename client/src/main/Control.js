@@ -8,7 +8,7 @@ import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
 import ModifyPage from './ModifyPage';
 import GithubRegister from './GithubRegister';
-
+import FindIdCheck from "./FindIdCheck";
 
 
 
@@ -31,9 +31,10 @@ export default function Control() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<RegisterUser />} />
-          <Route path="/detail" element={<StudyDetail />} />
-          <Route path="/mypage/modify" element={<ModifyPage />} />
-          <Route path="/githubRegister" element={<GithubRegister />} />
+          <Route path="/detail" element={<StudyDetail/>} />
+          <Route path="/mypage/modify" element={<ModifyPage/>} />
+          <Route path="/githubRegister" element={<GithubRegister/>} />
+          <Route path="/findIdCheck" element={<FindIdCheck/>} />
         </Routes>
       </BrowserRouter>
     </div>

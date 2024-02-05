@@ -247,6 +247,29 @@ public class RegisterController {
         return ResponseEntity.ok().body(githubLoginUrl);
     }
 
+    @PostMapping("findIdCheck")
+	public String searchEmail(HttpServletRequest request, Model model, SwithUser swithUser,
+			@RequestParam String username, 
+			@RequestParam String nickname) {
+		try {
+			swithUser.setUsername(username);
+			swithUser.setNickname(nickname);
+			SwithUser email = userService.findUserId(swithUser);
+			
+	
+			model.addAttribute("findEmail", email);
+
+		} catch (Exception e) {
+			model.addAttribute("msg", "오류가 발생되었습니다.");
+			e.printStackTrace();
+		}
+		return "SwithUser/findIdResult";
+	}
+    
+    
+    
+    
+    
     
 }
    

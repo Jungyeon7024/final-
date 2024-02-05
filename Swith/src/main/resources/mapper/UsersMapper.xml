@@ -31,12 +31,10 @@
 	 
 	 <!-- 원정연 파트 -->
 	
-<update id="updateUser" parameterType="lm.swith.user.model.SwithUser">
-    UPDATE users
-    SET user_introduction = #{user_introduction},
-    password = #{password}
-    WHERE email = #{email}
-</update>
+	<select id="findUserId" resultMap="lm.swith.user.model.SwithUser">
+		select * FROM Users
+		where username=#{username} and nickname=#{nickname}
+	</select>
     
     
     
