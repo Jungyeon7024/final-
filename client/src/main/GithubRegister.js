@@ -27,7 +27,7 @@ const GithubRegister = () => {
     const fetchUserData = async () => {
       try {
         // 서버에 사용자 정보를 가져오는 요청
-        const response = await axios.get("/github/callback");
+        const response = await axios.get("/github/register");
         setGithubInfo(response.data); // 로그인한 토큰 이용해서 해당 유저 데이터 가져오는거
         console.log(githubInfo);
       } catch (error) {
@@ -38,25 +38,7 @@ const GithubRegister = () => {
     fetchUserData();
   }, []);
   
-  const handleGithubLogin = async () => {
-    try {
-      const response = await fetch(
-        "http://localhost:8080/users/github/login-url"
-      );
-
-      if (response.status !== 200) {
-        throw new Error(
-          `Failed to fetch GitHub login URL. Status: ${response.status}`
-        );
-      }
-    
-
-      const githubUrl = await response.text();
-      window.location.href = githubUrl;
-    } catch (error) {
-      console.error("GitHub login error:", error);
-    }
-  };
+  
   const handleInputChange = (e) => {
     //e 자리값 밑에 target
     const { name, value } = e.target;
@@ -150,7 +132,7 @@ const GithubRegister = () => {
 
   return (
     <div>
-   
+      
 
       <br></br>
       <h1 className="title">회원가입</h1>

@@ -23,6 +23,22 @@ function RegisterUser() {
     role: '',
   });
 
+  const handleGithubLogin = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/github/login-url");
+
+      if (response.status !== 200) {
+        throw new Error(
+          `Failed to fetch GitHub login URL. Status: ${response.status}`
+        );
+      }
+
+      const githubUrl = await response.text();
+      window.location.href = githubUrl;
+    } catch (error) {
+      console.error("GitHub login error:", error);
+    }
+  };
   const handleInputChange = (e) => {
     //e 자리값 밑에 target
     const { name, value } = e.target;
@@ -74,7 +90,7 @@ function RegisterUser() {
     setNumber(value);
   };
 
-  const handleAddUser = async () => {//registser
+  const handleAddUser = async () => {//registse
     if (isButtonDisabled === true) {
       try {
         //변경된 데이터 값 저장
@@ -141,12 +157,12 @@ function RegisterUser() {
               onClick={handleEmail}
               className="btn round"
               style={{
-                backgroundColor: '#ffffb5',
-                width: '100px',
-                height: '50px',
-                margin: '10px',
-                marginTop: '5px',
-                borderRadius: '30px',
+                backgroundColor: "#ffffb5",
+                width: "100px",
+                height: "50px",
+                margin: "10px",
+                marginTop: "5px",
+                borderRadius: "30px",
               }}
             >
               인증하기
@@ -164,12 +180,12 @@ function RegisterUser() {
               onClick={handleConfirm}
               className="btn round"
               style={{
-                backgroundColor: '#ffffb5',
-                width: '100px',
-                height: '50px',
-                margin: '10px',
-                marginTop: '5px',
-                borderRadius: '30px',
+                backgroundColor: "#ffffb5",
+                width: "100px",
+                height: "50px",
+                margin: "10px",
+                marginTop: "5px",
+                borderRadius: "30px",
               }}
             >
               인증확인
@@ -262,12 +278,12 @@ function RegisterUser() {
               name="useraddress"
               className="btn round"
               style={{
-                backgroundColor: '#ffffb5',
-                width: '150px',
-                height: '50px',
-                margin: '10px',
-                marginTop: '5px',
-                borderRadius: '30px',
+                backgroundColor: "#ffffb5",
+                width: "150px",
+                height: "50px",
+                margin: "10px",
+                marginTop: "5px",
+                borderRadius: "30px",
               }}
               type="button"
               value="주소 찾기"
@@ -304,13 +320,13 @@ function RegisterUser() {
             name="login"
             className="btn round"
             style={{
-              backgroundColor: '#75ddff',
-              width: '200px',
-              height: '50px',
-              margin: '10px',
-              marginTop: '20px',
-              marginBottom: '10px',
-              borderRadius: '30px',
+              backgroundColor: "#75ddff",
+              width: "200px",
+              height: "50px",
+              margin: "10px",
+              marginTop: "20px",
+              marginBottom: "10px",
+              borderRadius: "30px",
             }}
           >
             회원가입 완료
@@ -322,27 +338,28 @@ function RegisterUser() {
             name="login"
             className="btn round"
             style={{
-              backgroundColor: '#ffffb5',
-              width: '150px',
-              height: '50px',
-              margin: '10px',
-              marginTop: '20px',
-              borderRadius: '30px',
+              backgroundColor: "#ffffb5",
+              width: "150px",
+              height: "50px",
+              margin: "10px",
+              marginTop: "20px",
+              borderRadius: "30px",
             }}
           >
             카카오 로그인
           </button>
-
+          
           <button
+            onClick={handleGithubLogin}
             type="button"
             name="login"
             className="btn round"
             style={{
-              backgroundColor: '#ffffb5',
-              width: '150px',
-              height: '50px',
-              margin: '10px',
-              borderRadius: '30px',
+              backgroundColor: "#ffffb5",
+              width: "150px",
+              height: "50px",
+              margin: "10px",
+              borderRadius: "30px",
             }}
           >
             Github 로그인
